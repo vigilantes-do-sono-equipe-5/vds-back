@@ -41,4 +41,5 @@ $ yarn run start:prod
 #### [Pedro Lopes](https://www.linkedin.com/in/pedro-phls/),
 #### [Darlan Santos](https://www.linkedin.com/in/darlan-souza-dev/),
 #### [Ednilson Fragoso](https://www.linkedin.com/in/ednilsonfragoso/),
-#### [João Guilherme Braga](https://www.linkedin.com/in/joao-guilherme-braga/)
+#### [João Guilherme Braga](https://www.linkedin.com/in/joao-guilherme-braga/),
+#### [Matheus Silva](https://www.linkedin.com/in/matheus-silva-480011230/)
