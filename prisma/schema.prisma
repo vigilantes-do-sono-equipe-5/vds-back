@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs https//pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String                 @id @default(uuid())
+  points                Int
+  day_goal              Int
+  night_goal            Int
+  user_program_sessions User_Program_Session[]
+  ratings               Rating[]
+  isi                   Isi[]
+  gad                   Gad[]
+  phq                   Phq[]
+  productivities        Productivity[]
+  sleep_Diaries         Sleep_Diarie[]
+}
+
+model User_Program_Session {
+  id         String   @id @default(uuid())
+  session_id Int      @unique
+  state      String
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+}
+
+model Rating {
+  id         String   @id @default(uuid())
+  label      String
+  grade      Int
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+}
+
+model Isi {
+  id         String   @id @default(uuid())
+  q1         Int
+  q2         Int
+  q3         Int
+  q4         Int
+  q5         Int
+  q6         Int
+  q7         Int
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+}
+
+model Gad {
+  id         String   @id @default(uuid())
+  q1         Int
+  q2         Int
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+}
+
+model Phq {
+  id         String   @id @default(uuid())
+  q1         Int
+  q2         Int
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+}
+
+model Productivity {
+  id         String   @id @default(uuid())
+  q1         Int
+  q2         Int
+  q3         Int
+  q4         Int
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+}
+
+model Sleep_Diarie {
+  id                              String   @id @default(uuid())
+  autogenic_training              Boolean
+  behavior_activation             Boolean
+  challenge_catastrophic_thinking Boolean
+  concentration                   Float
+  created_at                      DateTime
+  DateTime                        DateTime
+  deep_breath                     Boolean
+  energy                          Float
+  get_up                          DateTime
+  go_bed                          DateTime
+  go_sleep                        DateTime
+  grade                           Float
+  gratitude                       Boolean
+  humor                           Float
+  imagery                         Boolean
+  light_therapy                   Boolean
+  meditation                      Boolean
+  paradoxical_intention           Boolean
+  parking_lot                     Boolean
+  pmr                             Boolean
+  relationships                   Float
+  stimulus_control                Boolean
+  thought_block                   Boolean
+  timezone                        Int
+  time_to_sleep                   Int
+  wake_up                         DateTime
+  wake_up_count                   Int
+  wake_up_duration                Int
+  user                            User     @relation(fields: [user_id], references: [id])
+  user_id                         String
+  tags                            Tag[]
+}
+
+model Tag {
+  id              String       @id @default(uuid())
+  sleep_tag       String
+  sleep_diarie    Sleep_Diarie @relation(fields: [sleep_diarie_id], references: [id])
+  sleep_diarie_id String
+}
