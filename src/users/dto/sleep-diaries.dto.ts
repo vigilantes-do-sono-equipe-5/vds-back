@@ -1,33 +1,91 @@
+import { IsArray, IsBoolean, IsDate, IsNumber, IsString } from 'class-validator'
 import { Tag } from './tag.dto'
 
 export class SleepDiaries {
-  autogenic_training?: boolean
-  behavior_activation?: boolean
-  challenge_catastrophic_thinking?: boolean
-  concentration?: number
-  created_at: Date
-  date: Date
-  deep_breath?: boolean
-  energy?: number
-  get_up: string
-  go_bed: string
-  go_sleep: string
-  grade?: number
-  gratitude?: boolean
-  humor?: number
-  imagery?: boolean
-  light_therapy?: boolean
-  meditation?: boolean
-  paradoxical_intention?: boolean
-  parking_lot?: boolean
-  pmr?: boolean
-  relationships?: number
-  stimulus_control?: boolean
-  tags: Tag[]
-  thought_block?: boolean
-  time_to_sleep: number
-  timezone: number
-  wake_up: string
-  wake_up_count: number
-  wake_up_duration: number
+  @IsBoolean()
+    autogenic_training?: boolean | null
+
+  @IsBoolean()
+    behavior_activation?: boolean | null
+
+  @IsBoolean()
+    challenge_catastrophic_thinking?: boolean
+
+  @IsNumber()
+    concentration?: number
+
+  @IsDate()
+    created_at: Date
+
+  @IsDate()
+    date: Date
+
+  @IsBoolean()
+    deep_breath?: boolean
+
+  @IsNumber()
+    energy?: number
+
+  @IsString()
+    get_up: string
+
+  @IsString()
+    go_bed: string
+
+  @IsString()
+    go_sleep: string
+
+  @IsNumber()
+    grade?: number
+
+  @IsBoolean()
+    gratitude?: boolean
+
+  @IsNumber()
+    humor?: number
+
+  @IsBoolean()
+    imagery?: boolean
+
+  @IsBoolean()
+    light_therapy?: boolean
+
+  @IsBoolean()
+    meditation?: boolean
+
+  @IsBoolean()
+    paradoxical_intention?: boolean
+
+  @IsBoolean()
+    parking_lot?: boolean
+
+  @IsBoolean()
+    pmr?: boolean
+
+  @IsNumber()
+    relationships?: number
+
+  @IsBoolean()
+    stimulus_control?: boolean
+
+  @IsArray()
+    tags: Tag[]
+
+  @IsBoolean()
+    thought_block?: boolean
+
+  @IsNumber()
+    time_to_sleep: number
+
+  @IsNumber()
+    timezone: number
+
+  @IsString()
+    wake_up: string
+
+  @IsNumber()
+    wake_up_count: number
+
+  @IsNumber()
+    wake_up_duration: number
 }
