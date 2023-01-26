@@ -72,10 +72,12 @@ export class SleepDiaries {
 
   @IsOptional()
   @IsBoolean()
+  @ValidateIf((_, value) => value !== null)
     light_therapy?: boolean | null
 
   @IsOptional()
   @IsBoolean()
+  @ValidateIf((_, value) => value !== null)
     meditation?: boolean | null
 
   @IsOptional()
@@ -85,6 +87,7 @@ export class SleepDiaries {
 
   @IsOptional()
   @IsBoolean()
+  @ValidateIf((_, value) => value !== null)
     parking_lot?: boolean | null
 
   @IsOptional()
