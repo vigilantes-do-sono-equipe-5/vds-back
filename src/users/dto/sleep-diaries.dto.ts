@@ -1,16 +1,31 @@
-import { IsArray, IsBoolean, IsDate, IsNumber, IsString } from 'class-validator'
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateIf
+} from 'class-validator'
 import { Tag } from './tag.dto'
 
 export class SleepDiaries {
+  @IsOptional()
   @IsBoolean()
+  @ValidateIf((_, value) => value !== null)
     autogenic_training?: boolean | null
 
+  @IsOptional()
   @IsBoolean()
+  @ValidateIf((_, value) => value !== null)
     behavior_activation?: boolean | null
 
+  @IsOptional()
   @IsBoolean()
-    challenge_catastrophic_thinking?: boolean
+  @ValidateIf((_, value) => value !== null)
+    challenge_catastrophic_thinking?: boolean | null
 
+  @IsOptional()
   @IsNumber()
     concentration?: number
 
@@ -20,9 +35,12 @@ export class SleepDiaries {
   @IsDate()
     date: Date
 
+  @IsOptional()
   @IsBoolean()
-    deep_breath?: boolean
+  @ValidateIf((_, value) => value !== null)
+    deep_breath?: boolean | null
 
+  @IsOptional()
   @IsNumber()
     energy?: number
 
@@ -38,41 +56,58 @@ export class SleepDiaries {
   @IsNumber()
     grade?: number
 
+  @IsOptional()
   @IsBoolean()
-    gratitude?: boolean
+  @ValidateIf((_, value) => value !== null)
+    gratitude?: boolean | null
 
+  @IsOptional()
   @IsNumber()
     humor?: number
 
+  @IsOptional()
   @IsBoolean()
-    imagery?: boolean
+  @ValidateIf((_, value) => value !== null)
+    imagery?: boolean | null
 
+  @IsOptional()
   @IsBoolean()
-    light_therapy?: boolean
+    light_therapy?: boolean | null
 
+  @IsOptional()
   @IsBoolean()
-    meditation?: boolean
+    meditation?: boolean | null
 
+  @IsOptional()
   @IsBoolean()
-    paradoxical_intention?: boolean
+  @ValidateIf((_, value) => value !== null)
+    paradoxical_intention?: boolean | null
 
+  @IsOptional()
   @IsBoolean()
-    parking_lot?: boolean
+    parking_lot?: boolean | null
 
+  @IsOptional()
   @IsBoolean()
-    pmr?: boolean
+  @ValidateIf((_, value) => value !== null)
+    pmr?: boolean | null
 
+  @IsOptional()
   @IsNumber()
     relationships?: number
 
+  @IsOptional()
   @IsBoolean()
-    stimulus_control?: boolean
+  @ValidateIf((_, value) => value !== null)
+    stimulus_control?: boolean | null
 
   @IsArray()
     tags: Tag[]
 
+  @IsOptional()
   @IsBoolean()
-    thought_block?: boolean
+  @ValidateIf((_, value) => value !== null)
+    thought_block?: boolean | null
 
   @IsNumber()
     time_to_sleep: number
