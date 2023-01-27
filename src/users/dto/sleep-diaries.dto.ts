@@ -7,7 +7,7 @@ import {
   IsString,
   ValidateIf
 } from 'class-validator'
-import { Tag } from './tag.dto'
+import { TagDto } from './tag.dto'
 
 export class SleepDiaries {
   @IsOptional()
@@ -105,7 +105,7 @@ export class SleepDiaries {
     stimulus_control?: boolean | null
 
   @IsArray()
-    tags: Tag[]
+    tags: TagDto[]
 
   @IsOptional()
   @IsBoolean()

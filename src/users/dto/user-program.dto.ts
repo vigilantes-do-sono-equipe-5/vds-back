@@ -1,5 +1,12 @@
+import { IsDate, IsNumber, IsString } from 'class-validator'
+
 export class UserProgramDto {
-  session_id: number
-  state: string
-  created_at: Date
+  @IsNumber()
+    session_id: number
+
+  @IsString()
+    state: string
+
+  @IsDate()
+    created_at: Date
 }
