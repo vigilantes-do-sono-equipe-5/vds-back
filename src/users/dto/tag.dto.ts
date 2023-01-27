@@ -36,6 +36,6 @@ const TAGS = [
 ]
 
 export class TagDto {
-  @ValidateIf((_, value) => value === TAGS.includes(value))
+  @ValidateIf((_, value) => TAGS.includes(value))
     sleep_tag: TTagDto
 }
