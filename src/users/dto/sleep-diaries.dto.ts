@@ -9,7 +9,7 @@ import {
 } from 'class-validator'
 import { TagDto } from './tag.dto'
 
-export class SleepDiaries {
+export class SleepDiariesDto {
   @IsOptional()
   @IsBoolean()
   @ValidateIf((_, value) => value !== null)

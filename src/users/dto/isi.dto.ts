@@ -1,6 +1,6 @@
 import { IsDate, IsNumber, Min, Max } from 'class-validator'
 
-export class Isi {
+export class IsiDto {
   @IsNumber()
   @Min(0)
   @Max(4)
