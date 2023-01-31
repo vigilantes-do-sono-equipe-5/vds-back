@@ -1,12 +1,15 @@
-import { IsDate, IsNumber, IsString } from 'class-validator'
+import { IsNumber, IsString } from 'class-validator'
 
-export class UserProgramDto {
+export class AddUserProgramDto {
   @IsNumber()
     session_id: number
 
   @IsString()
     state: string
 
-  @IsDate()
-    created_at: Date
+  @IsString()
+    user_id: string
+
+  @IsString()
+    company_id: string
 }
