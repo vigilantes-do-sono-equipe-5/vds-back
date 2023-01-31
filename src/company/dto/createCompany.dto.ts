@@ -1,6 +1,6 @@
-import { Users } from 'src/users/entities/users.entity'
+import { User } from 'src/users/entities/user.entity'
 
 export class CreateCompanyDto {
   name: string
-  users: Users[]
+  users: User[]
 }

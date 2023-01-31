@@ -1,23 +1,26 @@
 import { IsDate, IsNumber, Min, Max } from 'class-validator'
 
-export class RatingsDto {
+export class AddProductivityDto {
   @IsNumber()
   @Min(0)
-  @Max(5)
-    id: string
+  @Max(10)
+    q1: number
 
   @IsNumber()
   @Min(0)
-  @Max(5)
-    label: string
+  @Max(80)
+    q2: number
 
   @IsNumber()
   @Min(0)
-  @Max(5)
-    grade: number
+  @Max(4)
+    q3: number
+
+  @IsNumber()
+  @Min(0)
+  @Max(10)
+    q4: number
 
   @IsDate()
-  @Min(0)
-  @Max(5)
     created_at: Date
 }

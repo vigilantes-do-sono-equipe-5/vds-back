@@ -1,6 +1,6 @@
 import { IsDate, IsNumber, Min, Max } from 'class-validator'
 
-export class PhqDto {
+export class AddPhqDto {
   @IsNumber()
   @Min(0)
   @Max(3)
