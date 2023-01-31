@@ -1,4 +1,4 @@
-import { CreateUserDto } from '../create-user.dto'
+import { CreateUserDto } from '../dto/create-user.dto'
 
 export class Users extends CreateUserDto {
   company_id: string
