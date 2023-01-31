@@ -1,6 +1,12 @@
-import { IsDate, IsNumber, Min, Max } from 'class-validator'
+import { IsDate, IsNumber, Min, Max, IsString } from 'class-validator'
 
 export class AddRatingsDto {
+  @IsString()
+    user_id: string
+
+  @IsString()
+    company_id: string
+
   @IsNumber()
   @Min(0)
   @Max(5)
