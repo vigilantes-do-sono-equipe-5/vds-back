@@ -10,8 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Company {
+  id                   String                 @id @default(uuid())
+  name                 String
+  users                User[]
+  Gad                  Gad[]
+  User_Program_Session User_Program_Session[]
+  Rating               Rating[]
+  Isi                  Isi[]
+  Phq                  Phq[]
+  Productivity         Productivity[]
+  Sleep_Diarie         Sleep_Diaries[]
+}
+
 model User {
   id                    String                 @id @default(uuid())
+  company               Company                @relation(fields: [company_id], references: [id])
+  company_id            String
   points                Int
   day_goal              Int
   night_goal            Int
@@ -21,7 +36,7 @@ model User {
   gad                   Gad[]
   phq                   Phq[]
   productivities        Productivity[]
-  sleep_Diaries         Sleep_Diarie[]
+  sleep_Diaries         Sleep_Diaries[]
 }
 
 model User_Program_Session {
@@ -31,6 +46,8 @@ model User_Program_Session {
   created_at DateTime @default(now())
   user       User     @relation(fields: [user_id], references: [id])
   user_id    String
+  company    Company  @relation(fields: [company_id], references: [id])
+  company_id String
 }
 
 model Rating {
@@ -40,6 +57,8 @@ model Rating {
   created_at DateTime @default(now())
   user       User     @relation(fields: [user_id], references: [id])
   user_id    String
+  company    Company  @relation(fields: [company_id], references: [id])
+  company_id String
 }
 
 model Isi {
@@ -54,15 +73,19 @@ model Isi {
   created_at DateTime @default(now())
   user       User     @relation(fields: [user_id], references: [id])
   user_id    String
+  company    Company  @relation(fields: [company_id], references: [id])
+  company_id String
 }
 
 model Gad {
   id         String   @id @default(uuid())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+  company    Company  @relation(fields: [company_id], references: [id])
+  company_id String
   q1         Int
   q2         Int
   created_at DateTime @default(now())
-  user       User     @relation(fields: [user_id], references: [id])
-  user_id    String
 }
 
 model Phq {
@@ -72,6 +95,8 @@ model Phq {
   created_at DateTime @default(now())
   user       User     @relation(fields: [user_id], references: [id])
   user_id    String
+  company    Company  @relation(fields: [company_id], references: [id])
+  company_id String
 }
 
 model Productivity {
@@ -83,10 +108,16 @@ model Productivity {
   created_at DateTime @default(now())
   user       User     @relation(fields: [user_id], references: [id])
   user_id    String
+  company    Company  @relation(fields: [company_id], references: [id])
+  company_id String
 }
 
-model Sleep_Diarie {
+model Sleep_Diaries {
   id                              String   @id @default(uuid())
+  user                            User     @relation(fields: [user_id], references: [id])
+  user_id                         String
+  company                         Company  @relation(fields: [company_id], references: [id])
+  company_id                      String
   autogenic_training              Boolean
   behavior_activation             Boolean
   challenge_catastrophic_thinking Boolean
@@ -115,14 +146,11 @@ model Sleep_Diarie {
   wake_up                         DateTime
   wake_up_count                   Int
   wake_up_duration                Int
-  user                            User     @relation(fields: [user_id], references: [id])
-  user_id                         String
-  tags                            Tag[]
+  tag                             Tag[]
 }
 
 model Tag {
-  id              String       @id @default(uuid())
-  sleep_tag       String
-  sleep_diarie    Sleep_Diarie @relation(fields: [sleep_diarie_id], references: [id])
-  sleep_diarie_id String
+  id            String          @id @default(uuid())
+  sleep_tag     String          @unique
+  sleep_diaries Sleep_Diaries[]
 }
