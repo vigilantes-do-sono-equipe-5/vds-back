@@ -1,5 +1,4 @@
 import {
-  IsArray,
   IsBoolean,
   IsDate,
   IsNumber,
@@ -7,9 +6,14 @@ import {
   IsString,
   ValidateIf
 } from 'class-validator'
-import { AddTagDto } from '../../tags/dto/add-tag.dto'
 
 export class AddSleepDiariesDto {
+  @IsString()
+    user_id: string
+
+  @IsString()
+    company_id: string
+
   @IsOptional()
   @IsBoolean()
   @ValidateIf((_, value) => value !== null)
@@ -28,9 +32,6 @@ export class AddSleepDiariesDto {
   @IsOptional()
   @IsNumber()
     concentration?: number
-
-  @IsDate()
-    created_at: Date
 
   @IsDate()
     date: Date
@@ -103,9 +104,6 @@ export class AddSleepDiariesDto {
   @IsBoolean()
   @ValidateIf((_, value) => value !== null)
     stimulus_control?: boolean | null
-
-  @IsArray()
-    tags: AddTagDto[]
 
   @IsOptional()
   @IsBoolean()
