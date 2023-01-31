@@ -118,29 +118,29 @@ model Sleep_Diaries {
   user_id                         String
   company                         Company  @relation(fields: [company_id], references: [id])
   company_id                      String
-  autogenic_training              Boolean
-  behavior_activation             Boolean
-  challenge_catastrophic_thinking Boolean
-  concentration                   Float
-  created_at                      DateTime
-  DateTime                        DateTime
-  deep_breath                     Boolean
-  energy                          Float
+  autogenic_training              Boolean?
+  behavior_activation             Boolean?
+  challenge_catastrophic_thinking Boolean?
+  concentration                   Float?
+  created_at                      DateTime @default(now())
+  date                            DateTime
+  deep_breath                     Boolean?
+  energy                          Float?
   get_up                          DateTime
   go_bed                          DateTime
   go_sleep                        DateTime
-  grade                           Float
-  gratitude                       Boolean
-  humor                           Float
-  imagery                         Boolean
-  light_therapy                   Boolean
-  meditation                      Boolean
-  paradoxical_intention           Boolean
-  parking_lot                     Boolean
-  pmr                             Boolean
-  relationships                   Float
-  stimulus_control                Boolean
-  thought_block                   Boolean
+  grade                           Float?
+  gratitude                       Boolean?
+  humor                           Float?
+  imagery                         Boolean?
+  light_therapy                   Boolean?
+  meditation                      Boolean?
+  paradoxical_intention           Boolean?
+  parking_lot                     Boolean?
+  pmr                             Boolean?
+  relationships                   Float?
+  stimulus_control                Boolean?
+  thought_block                   Boolean?
   timezone                        Int
   time_to_sleep                   Int
   wake_up                         DateTime
@@ -150,7 +150,10 @@ model Sleep_Diaries {
 }
 
 model Tag {
-  id            String          @id @default(uuid())
-  sleep_tag     String          @unique
-  sleep_diaries Sleep_Diaries[]
+  id              String         @default(uuid())
+  sleep_tag       String         @unique
+  Sleep_Diaries   Sleep_Diaries @relation(fields: [sleep_DiariesId], references: [id])
+  sleep_DiariesId String
+
+  @@id([id, sleep_tag, sleep_DiariesId])
 }
