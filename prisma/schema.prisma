@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Company {
@@ -25,7 +26,7 @@ model Company {
 
 model User {
   id                    String                 @id @default(uuid())
-  company               Company                @relation(fields: [company_id], references: [id])
+  company               Company                @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id            String
   points                Int
   day_goal              Int
@@ -41,12 +42,12 @@ model User {
 
 model User_Program_Session {
   id         String  @id @default(uuid())
-  session_id Int     @unique
+  session_id Int     
   state      String
   created_at String
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id    String
-  company    Company @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id String
 }
 
@@ -55,9 +56,9 @@ model Rating {
   label      String
   grade      Int
   created    String
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id    String
-  company    Company @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id String
 }
 
@@ -71,17 +72,17 @@ model Isi {
   q6         Int
   q7         Int
   created_at String
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id    String
-  company    Company @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id String
 }
 
 model Gad {
   id         String  @id @default(uuid())
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id    String
-  company    Company @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id String
   q1         Int
   q2         Int
@@ -93,9 +94,9 @@ model Phq {
   q1         Int
   q2         Int
   created_at String
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id    String
-  company    Company @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id String
 }
 
@@ -106,29 +107,29 @@ model Productivity {
   q3         Int
   q4         Int
   created_at String
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id    String
-  company    Company @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id String
 }
 
 model Sleep_Diaries {
   id                              String   @id @default(uuid())
-  user                            User     @relation(fields: [user_id], references: [id])
+  user                            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id                         String
-  company                         Company  @relation(fields: [company_id], references: [id])
+  company                         Company  @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id                      String
   autogenic_training              Boolean?
   behavior_activation             Boolean?
   challenge_catastrophic_thinking Boolean?
   concentration                   Float?
   created_at                      String
-  date                            DateTime
+  date                            String
   deep_breath                     Boolean?
   energy                          Float?
-  get_up                          DateTime
-  go_bed                          DateTime
-  go_sleep                        DateTime
+  get_up                          String
+  go_bed                          String
+  go_sleep                        String
   grade                           Float?
   gratitude                       Boolean?
   humor                           Float?
@@ -143,16 +144,16 @@ model Sleep_Diaries {
   thought_block                   Boolean?
   timezone                        Int
   time_to_sleep                   Int
-  wake_up                         DateTime
+  wake_up                         String
   wake_up_count                   Int
   wake_up_duration                Int
   tag                             Tag[]
 }
 
 model Tag {
-  id              String        @default(uuid())
-  sleep_tag       String        @unique
-  Sleep_Diaries   Sleep_Diaries @relation(fields: [sleep_DiariesId], references: [id])
+  id              String @default(uuid())
+  sleep_tag       String
+  Sleep_Diaries   Sleep_Diaries @relation(fields: [sleep_DiariesId], references: [id], onDelete: Cascade)
   sleep_DiariesId String
 
   @@id([id, sleep_tag, sleep_DiariesId])

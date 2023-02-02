@@ -28,5 +28,5 @@ export class AddProductivityDto {
     q4: number
 
   @IsString()
-    created_at: String
+    created_at: string
 }

@@ -18,4 +18,7 @@ export class AddPhqDto {
   @Min(0)
   @Max(3)
     q2: number
+
+  @IsString()
+    created_at: string
 }

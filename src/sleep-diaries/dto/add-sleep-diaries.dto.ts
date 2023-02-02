@@ -3,7 +3,8 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  ValidateIf
+  ValidateIf,
+  IsArray
 } from 'class-validator'
 
 export class AddSleepDiariesDto {
@@ -36,7 +37,7 @@ export class AddSleepDiariesDto {
     concentration?: number | null
 
   @IsString()
-    date: String
+    date: string
 
   @IsOptional()
   @IsBoolean()
@@ -130,4 +131,11 @@ export class AddSleepDiariesDto {
 
   @IsNumber()
     wake_up_duration: number
+
+  @IsString()
+    created_at: string
+
+  @IsOptional()
+  @IsArray()
+    tags?: Array<{ sleep_tag: string }>
 }

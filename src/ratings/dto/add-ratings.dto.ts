@@ -20,5 +20,5 @@ export class AddRatingsDto {
     grade: number
 
   @IsString()
-    created: String
+    created: string
 }

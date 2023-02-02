@@ -43,4 +43,7 @@ export class AddIsiDto {
   @Min(0)
   @Max(4)
     q7: number
+
+  @IsString()
+    created_at: string
 }

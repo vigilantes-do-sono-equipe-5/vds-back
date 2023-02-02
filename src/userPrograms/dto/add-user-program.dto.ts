@@ -14,4 +14,7 @@ export class AddUserProgramDto {
   @IsOptional()
   @IsString()
     company_id?: string
+
+  @IsString()
+    created_at: string
 }
