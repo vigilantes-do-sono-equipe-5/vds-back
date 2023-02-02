@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator'
+import { IsNumber, IsString, IsOptional } from 'class-validator'
 
 export class AddUserProgramDto {
   @IsNumber()
@@ -7,9 +7,11 @@ export class AddUserProgramDto {
   @IsString()
     state: string
 
+  @IsOptional()
   @IsString()
-    user_id: string
+    user_id?: string
 
+  @IsOptional()
   @IsString()
-    company_id: string
+    company_id?: string
 }

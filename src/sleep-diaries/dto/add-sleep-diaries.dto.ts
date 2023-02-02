@@ -1,6 +1,5 @@
 import {
   IsBoolean,
-  IsDate,
   IsNumber,
   IsOptional,
   IsString,
@@ -8,11 +7,13 @@ import {
 } from 'class-validator'
 
 export class AddSleepDiariesDto {
+  @IsOptional()
   @IsString()
-    user_id: string
+    user_id?: string
 
+  @IsOptional()
   @IsString()
-    company_id: string
+    company_id?: string
 
   @IsOptional()
   @IsBoolean()
@@ -31,10 +32,11 @@ export class AddSleepDiariesDto {
 
   @IsOptional()
   @IsNumber()
-    concentration?: number
+  @ValidateIf((_, value) => value !== null)
+    concentration?: number | null
 
-  @IsDate()
-    date: Date
+  @IsString()
+    date: String
 
   @IsOptional()
   @IsBoolean()
@@ -43,7 +45,8 @@ export class AddSleepDiariesDto {
 
   @IsOptional()
   @IsNumber()
-    energy?: number
+  @ValidateIf((_, value) => value !== null)
+    energy?: number | null
 
   @IsString()
     get_up: string
@@ -55,7 +58,8 @@ export class AddSleepDiariesDto {
     go_sleep: string
 
   @IsNumber()
-    grade?: number
+  @ValidateIf((_, value) => value !== null)
+    grade?: number | null
 
   @IsOptional()
   @IsBoolean()
@@ -64,7 +68,8 @@ export class AddSleepDiariesDto {
 
   @IsOptional()
   @IsNumber()
-    humor?: number
+  @ValidateIf((_, value) => value !== null)
+    humor?: number | null
 
   @IsOptional()
   @IsBoolean()
@@ -98,7 +103,8 @@ export class AddSleepDiariesDto {
 
   @IsOptional()
   @IsNumber()
-    relationships?: number
+  @ValidateIf((_, value) => value !== null)
+    relationships?: number | null
 
   @IsOptional()
   @IsBoolean()

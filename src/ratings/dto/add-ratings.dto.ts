@@ -1,16 +1,13 @@
-import { IsDate, IsNumber, Min, Max, IsString } from 'class-validator'
+import { IsOptional, IsNumber, Min, Max, IsString } from 'class-validator'
 
 export class AddRatingsDto {
+  @IsOptional()
   @IsString()
-    user_id: string
+    user_id?: string
 
+  @IsOptional()
   @IsString()
-    company_id: string
-
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-    id: string
+    company_id?: string
 
   @IsNumber()
   @Min(0)
@@ -22,8 +19,6 @@ export class AddRatingsDto {
   @Max(5)
     grade: number
 
-  @IsDate()
-  @Min(0)
-  @Max(5)
-    created_at: Date
+  @IsString()
+    created: String
 }

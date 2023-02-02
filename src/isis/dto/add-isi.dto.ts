@@ -1,11 +1,13 @@
-import { IsNumber, Min, Max, IsString } from 'class-validator'
+import { IsNumber, Min, Max, IsString, IsOptional } from 'class-validator'
 
 export class AddIsiDto {
+  @IsOptional()
   @IsString()
-    user_id: string
+    user_id?: string
 
+  @IsOptional()
   @IsString()
-    company_id: string
+    company_id?: string
 
   @IsNumber()
   @Min(0)

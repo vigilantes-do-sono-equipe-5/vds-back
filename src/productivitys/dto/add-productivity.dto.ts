@@ -1,11 +1,11 @@
-import { IsDate, IsNumber, Min, Max, IsString } from 'class-validator'
+import { IsNumber, Min, Max, IsString } from 'class-validator'
 
 export class AddProductivityDto {
   @IsString()
-    user_id: string
+    user_id?: string
 
   @IsString()
-    company_id: string
+    company_id?: string
 
   @IsNumber()
   @Min(0)
@@ -27,6 +27,6 @@ export class AddProductivityDto {
   @Max(10)
     q4: number
 
-  @IsDate()
-    created_at: Date
+  @IsString()
+    created_at: String
 }
