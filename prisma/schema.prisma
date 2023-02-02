@@ -40,29 +40,29 @@ model User {
 }
 
 model User_Program_Session {
-  id         String   @id @default(uuid())
-  session_id Int      @unique
+  id         String  @id @default(uuid())
+  session_id Int     @unique
   state      String
-  created_at DateTime @default(now())
-  user       User     @relation(fields: [user_id], references: [id])
+  created_at String
+  user       User    @relation(fields: [user_id], references: [id])
   user_id    String
-  company    Company  @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id])
   company_id String
 }
 
 model Rating {
-  id         String   @id @default(uuid())
+  id         String  @id @default(uuid())
   label      String
   grade      Int
-  created_at DateTime @default(now())
-  user       User     @relation(fields: [user_id], references: [id])
+  created    String
+  user       User    @relation(fields: [user_id], references: [id])
   user_id    String
-  company    Company  @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id])
   company_id String
 }
 
 model Isi {
-  id         String   @id @default(uuid())
+  id         String  @id @default(uuid())
   q1         Int
   q2         Int
   q3         Int
@@ -70,45 +70,45 @@ model Isi {
   q5         Int
   q6         Int
   q7         Int
-  created_at DateTime @default(now())
-  user       User     @relation(fields: [user_id], references: [id])
+  created_at String
+  user       User    @relation(fields: [user_id], references: [id])
   user_id    String
-  company    Company  @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id])
   company_id String
 }
 
 model Gad {
-  id         String   @id @default(uuid())
-  user       User     @relation(fields: [user_id], references: [id])
+  id         String  @id @default(uuid())
+  user       User    @relation(fields: [user_id], references: [id])
   user_id    String
-  company    Company  @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id])
   company_id String
   q1         Int
   q2         Int
-  created_at DateTime @default(now())
+  created_at String
 }
 
 model Phq {
-  id         String   @id @default(uuid())
+  id         String  @id @default(uuid())
   q1         Int
   q2         Int
-  created_at DateTime @default(now())
-  user       User     @relation(fields: [user_id], references: [id])
+  created_at String
+  user       User    @relation(fields: [user_id], references: [id])
   user_id    String
-  company    Company  @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id])
   company_id String
 }
 
 model Productivity {
-  id         String   @id @default(uuid())
+  id         String  @id @default(uuid())
   q1         Int
   q2         Int
   q3         Int
   q4         Int
-  created_at DateTime @default(now())
-  user       User     @relation(fields: [user_id], references: [id])
+  created_at String
+  user       User    @relation(fields: [user_id], references: [id])
   user_id    String
-  company    Company  @relation(fields: [company_id], references: [id])
+  company    Company @relation(fields: [company_id], references: [id])
   company_id String
 }
 
@@ -122,7 +122,7 @@ model Sleep_Diaries {
   behavior_activation             Boolean?
   challenge_catastrophic_thinking Boolean?
   concentration                   Float?
-  created_at                      DateTime @default(now())
+  created_at                      String
   date                            DateTime
   deep_breath                     Boolean?
   energy                          Float?
@@ -150,8 +150,8 @@ model Sleep_Diaries {
 }
 
 model Tag {
-  id              String         @default(uuid())
-  sleep_tag       String         @unique
+  id              String        @default(uuid())
+  sleep_tag       String        @unique
   Sleep_Diaries   Sleep_Diaries @relation(fields: [sleep_DiariesId], references: [id])
   sleep_DiariesId String
 
