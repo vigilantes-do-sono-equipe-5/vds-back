@@ -1,11 +1,4 @@
-import {
-  IsBoolean,
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateIf,
-  IsArray
-} from 'class-validator'
+import { IsBoolean, IsNumber, IsOptional, IsString, ValidateIf, IsArray } from 'class-validator'
 
 export class AddSleepDiariesDto {
   @IsOptional()

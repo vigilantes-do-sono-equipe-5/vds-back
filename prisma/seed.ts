@@ -45,130 +45,113 @@ const main = async (): Promise<void> => {
   console.log(`Company ${newCompany.name} criado.`)
 
   console.log(`Foram identificados ${dataJson.length} usuários.`)
-  void dataJson.map(
-    async ({
+  void dataJson.map(async ({ points, day_goal, night_goal, user_program_sessions, sleep_diaries, productivity, ratings, isi, gad, phq }) => {
+    const data = {
       points,
       day_goal,
       night_goal,
-      user_program_sessions,
-      sleep_diaries,
-      productivity,
-      ratings,
-      isi,
-      gad,
-      phq
-    }) => {
-      const data = {
-        points,
-        day_goal,
-        night_goal,
+      company_id: newCompany.id
+    }
+    const newUser = await prisma.user.create({ data })
+    qtdUsers += 1
+    progress()
+
+    qtdUserProgramSessions += user_program_sessions.length
+    const dataUserProgramSessions = user_program_sessions.map((e: AddUserProgramDto) => {
+      return {
+        ...e,
+        user_id: newUser.id,
         company_id: newCompany.id
       }
-      const newUser = await prisma.user.create({ data })
-      qtdUsers += 1
-      progress()
+    })
 
-      qtdUserProgramSessions += user_program_sessions.length
-      const dataUserProgramSessions = user_program_sessions.map(
-        (e: AddUserProgramDto) => {
-          return {
-            ...e,
-            user_id: newUser.id,
-            company_id: newCompany.id
-          }
-        }
-      )
+    await prisma.user_Program_Session.createMany({
+      data: dataUserProgramSessions
+    })
+    progress()
 
-      await prisma.user_Program_Session.createMany({
-        data: dataUserProgramSessions
-      })
-      progress()
+    qtdSleepDiaries += sleep_diaries.length
+    sleep_diaries.map(async (e: AddSleepDiariesDto): Promise<Sleep_Diaries> => {
+      let tags: Array<{ sleep_tag: string }> | [] = []
+      e.tags ? (tags = e.tags) : (e.tags = [])
+      delete e.tags
 
-      qtdSleepDiaries += sleep_diaries.length
-      sleep_diaries.map(
-        async (e: AddSleepDiariesDto): Promise<Sleep_Diaries> => {
-          let tags: Array<{ sleep_tag: string }> | [] = []
-          e.tags ? (tags = e.tags) : (e.tags = [])
-          delete e.tags
+      const data = {
+        ...e,
+        user_id: newUser.id,
+        company_id: newCompany.id
+      }
+      const sleepDiarie = await prisma.sleep_Diaries.create({ data })
 
+      if (tags.length > 0) {
+        let i: CreateTagDto
+        for (i of tags) {
           const data = {
-            ...e,
-            user_id: newUser.id,
-            company_id: newCompany.id
+            sleep_tag: i.sleep_tag,
+            sleep_DiariesId: sleepDiarie.id
           }
-          const sleepDiarie = await prisma.sleep_Diaries.create({ data })
-
-          if (tags.length > 0) {
-            let i: CreateTagDto
-            for (i of tags) {
-              const data = {
-                sleep_tag: i.sleep_tag,
-                sleep_DiariesId: sleepDiarie.id
-              }
-              await prisma.tag.create({ data })
-            }
-          }
-          return sleepDiarie
+          await prisma.tag.create({ data })
         }
-      )
-      progress()
+      }
+      return sleepDiarie
+    })
+    progress()
 
-      qtdProductivity += productivity.length
-      const dataProductivity = productivity.map((e: AddProductivityDto) => {
-        return {
-          ...e,
-          user_id: newUser.id,
-          company_id: newCompany.id
-        }
-      })
-      await prisma.productivity.createMany({ data: dataProductivity })
-      progress()
+    qtdProductivity += productivity.length
+    const dataProductivity = productivity.map((e: AddProductivityDto) => {
+      return {
+        ...e,
+        user_id: newUser.id,
+        company_id: newCompany.id
+      }
+    })
+    await prisma.productivity.createMany({ data: dataProductivity })
+    progress()
 
-      qtdRatings += ratings.length
-      const dataRatings = ratings.map((e: AddRatingsDto) => {
-        return {
-          ...e,
-          user_id: newUser.id,
-          company_id: newCompany.id
-        }
-      })
-      await prisma.rating.createMany({ data: dataRatings })
-      progress()
+    qtdRatings += ratings.length
+    const dataRatings = ratings.map((e: AddRatingsDto) => {
+      return {
+        ...e,
+        user_id: newUser.id,
+        company_id: newCompany.id
+      }
+    })
+    await prisma.rating.createMany({ data: dataRatings })
+    progress()
 
-      qtdIsi += isi.length
-      const dataIsi = isi.map((e: AddIsiDto) => {
-        return {
-          ...e,
-          user_id: newUser.id,
-          company_id: newCompany.id
-        }
-      })
-      await prisma.isi.createMany({ data: dataIsi })
-      progress()
+    qtdIsi += isi.length
+    const dataIsi = isi.map((e: AddIsiDto) => {
+      return {
+        ...e,
+        user_id: newUser.id,
+        company_id: newCompany.id
+      }
+    })
+    await prisma.isi.createMany({ data: dataIsi })
+    progress()
 
-      qtdGad += gad.length
-      const dataGad = gad.map((e: AddGadDto) => {
-        return {
-          ...e,
-          user_id: newUser.id,
-          company_id: newCompany.id
-        }
-      })
-      await prisma.gad.createMany({ data: dataGad })
-      progress()
+    qtdGad += gad.length
+    const dataGad = gad.map((e: AddGadDto) => {
+      return {
+        ...e,
+        user_id: newUser.id,
+        company_id: newCompany.id
+      }
+    })
+    await prisma.gad.createMany({ data: dataGad })
+    progress()
 
-      qtdPhq += phq.length
-      const dataPhq = phq.map((e: AddPhqDto) => {
-        return {
-          ...e,
-          user_id: newUser.id,
-          company_id: newCompany.id
-        }
-      })
-      await prisma.phq.createMany({ data: dataPhq })
-      progress()
-    }
-  )
+    qtdPhq += phq.length
+    const dataPhq = phq.map((e: AddPhqDto) => {
+      return {
+        ...e,
+        user_id: newUser.id,
+        company_id: newCompany.id
+      }
+    })
+    await prisma.phq.createMany({ data: dataPhq })
+    progress()
+  })
 }
 
 main()

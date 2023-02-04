@@ -12,10 +12,7 @@ export class UserProgramsService {
     return await this.prisma.user_Program_Session.create({ data: { ...dto } })
   }
 
-  async update (
-    id: string,
-    dto: UpdateUserProgramDto
-  ): Promise<User_Program_Session> {
+  async update (id: string, dto: UpdateUserProgramDto): Promise<User_Program_Session> {
     return await this.prisma.user_Program_Session.update({
       where: { id },
       data: { ...dto }
