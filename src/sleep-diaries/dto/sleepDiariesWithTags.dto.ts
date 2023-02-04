@@ -1,14 +1,6 @@
-import { IsBoolean, IsNumber, IsOptional, IsString, ValidateIf, IsArray } from 'class-validator'
+import { IsBoolean, IsNumber, IsOptional, IsString, ValidateIf } from 'class-validator'
 
-export class AddSleepDiariesDto {
-  @IsOptional()
-  @IsString()
-    user_id?: string
-
-  @IsOptional()
-  @IsString()
-    company_id?: string
-
+export class SleepDiariesWithTagsDto {
   @IsOptional()
   @IsBoolean()
   @ValidateIf((_, value) => value !== null)
@@ -127,8 +119,4 @@ export class AddSleepDiariesDto {
 
   @IsString()
     created_at: string
-
-  @IsOptional()
-  @IsArray()
-    tags?: Array<{ sleep_tag: string }>
 }

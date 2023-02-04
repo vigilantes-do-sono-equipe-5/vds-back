@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Sleep_Diaries } from '@prisma/client'
 import { PrismaService } from 'src/prisma/prisma.service'
-import { AddSleepDiariesDto } from './dto/add-sleep-diaries.dto'
+import { AddSleepDiariesDto } from './dto/add-sleepDiaries.dto'
 import { UpdateSleepDiariesDto } from './dto/updateSleepDiaries.dto'
 
 @Injectable()

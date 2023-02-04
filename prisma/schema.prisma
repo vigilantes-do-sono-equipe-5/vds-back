@@ -42,7 +42,7 @@ model User {
 
 model User_Program_Session {
   id         String  @id @default(uuid())
-  session_id Int     
+  session_id Int
   state      String
   created_at String
   user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -114,10 +114,10 @@ model Productivity {
 }
 
 model Sleep_Diaries {
-  id                              String   @id @default(uuid())
-  user                            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id                              String               @id @default(uuid())
+  user                            User                 @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id                         String
-  company                         Company  @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  company                         Company              @relation(fields: [company_id], references: [id], onDelete: Cascade)
   company_id                      String
   autogenic_training              Boolean?
   behavior_activation             Boolean?
@@ -147,14 +147,19 @@ model Sleep_Diaries {
   wake_up                         String
   wake_up_count                   Int
   wake_up_duration                Int
-  tag                             Tag[]
+  tags                            TagOnSleep_Diaries[]
 }
 
 model Tag {
-  id              String @default(uuid())
-  sleep_tag       String
-  Sleep_Diaries   Sleep_Diaries @relation(fields: [sleep_DiariesId], references: [id], onDelete: Cascade)
-  sleep_DiariesId String
+  id            String               @id @default(uuid())
+  sleep_tag     String               @unique
+  sleep_Diaries TagOnSleep_Diaries[]
+}
 
-  @@id([id, sleep_tag, sleep_DiariesId])
+model TagOnSleep_Diaries {
+  id              String        @id @default(uuid())
+  tag             Tag           @relation(fields: [sleep_tagId], references: [id], onDelete: Cascade)
+  sleep_tagId     String
+  sleep_diaries   Sleep_Diaries @relation(fields: [sleep_DiariesId], references: [id], onDelete: Cascade)
+  sleep_DiariesId String
 }

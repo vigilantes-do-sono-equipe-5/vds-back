@@ -137,10 +137,21 @@ CREATE TABLE "Sleep_Diaries" (
 CREATE TABLE "Tag" (
     "id" TEXT NOT NULL,
     "sleep_tag" TEXT NOT NULL,
+
+    CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TagOnSleep_Diaries" (
+    "id" TEXT NOT NULL,
+    "sleep_tagId" TEXT NOT NULL,
     "sleep_DiariesId" TEXT NOT NULL,
 
-    CONSTRAINT "Tag_pkey" PRIMARY KEY ("id","sleep_tag","sleep_DiariesId")
+    CONSTRAINT "TagOnSleep_Diaries_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tag_sleep_tag_key" ON "Tag"("sleep_tag");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -188,4 +199,7 @@ ALTER TABLE "Sleep_Diaries" ADD CONSTRAINT "Sleep_Diaries_user_id_fkey" FOREIGN 
 ALTER TABLE "Sleep_Diaries" ADD CONSTRAINT "Sleep_Diaries_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Tag" ADD CONSTRAINT "Tag_sleep_DiariesId_fkey" FOREIGN KEY ("sleep_DiariesId") REFERENCES "Sleep_Diaries"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "TagOnSleep_Diaries" ADD CONSTRAINT "TagOnSleep_Diaries_sleep_tagId_fkey" FOREIGN KEY ("sleep_tagId") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TagOnSleep_Diaries" ADD CONSTRAINT "TagOnSleep_Diaries_sleep_DiariesId_fkey" FOREIGN KEY ("sleep_DiariesId") REFERENCES "Sleep_Diaries"("id") ON DELETE CASCADE ON UPDATE CASCADE;

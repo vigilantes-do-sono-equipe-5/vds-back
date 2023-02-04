@@ -1,19 +1,36 @@
-import { PrismaClient, Sleep_Diaries } from '@prisma/client'
-import { CreateTagDto } from 'src/tags/dto/create-tag.dto'
+import { PrismaClient } from '@prisma/client'
+import { SleepDiariesWithTagsDto } from 'src/sleep-diaries/dto/sleepDiariesWithTags.dto'
 import { AddGadDto } from '../src/gads/dto/add-gad.dto'
 import { AddIsiDto } from '../src/isis/dto/add-isi.dto'
 import { AddPhqDto } from '../src/phqs/dto/add-phq.dto'
 import { AddProductivityDto } from '../src/productivitys/dto/add-productivity.dto'
 import { AddRatingsDto } from '../src/ratings/dto/add-ratings.dto'
-import { AddSleepDiariesDto } from '../src/sleep-diaries/dto/add-sleep-diaries.dto'
+import { JsonSleepDiariesDto } from '../src/sleep-diaries/dto/json-sleep-diaries.dto'
 import { AddUserProgramDto } from '../src/userPrograms/dto/add-user-program.dto'
-import * as data from '../src/utils/data/data.json'
+import * as dataJson from '../src/utils/data/data.json'
 
 const prisma = new PrismaClient()
-const dataJson = [...data.user]
+// const dataJson = [...data.user]
+const tags = [
+  { sleep_tag: 'caffeine' },
+  { sleep_tag: 'noise' },
+  { sleep_tag: 'pain' },
+  { sleep_tag: 'exercise' },
+  { sleep_tag: 'light' },
+  { sleep_tag: 'medicine' },
+  { sleep_tag: 'nicotine' },
+  { sleep_tag: 'partner' },
+  { sleep_tag: 'nap' },
+  { sleep_tag: 'temperature' },
+  { sleep_tag: 'meal' },
+  { sleep_tag: 'alcohol' },
+  { sleep_tag: 'bathroom' },
+  { sleep_tag: 'dream' }
+]
 let qtdUsers = 0
 let qtdUserProgramSessions = 0
 let qtdSleepDiaries = 0
+let qtdTags = 0
 let qtdProductivity = 0
 let qtdRatings = 0
 let qtdIsi = 0
@@ -23,12 +40,12 @@ let qtdPhq = 0
 const progress = (): void => {
   console.clear()
   console.log(`
-      Seeding in progress...
-
+      Seeding in progress...\n
       1 company cadastrado.
       ${qtdUsers} usuários cadastrados.
       ${qtdUserProgramSessions} user_program_sessions cadastrados.
       ${qtdSleepDiaries} sleep_diaries cadastrados.
+      ${qtdTags} tags cadastradas.
       ${qtdProductivity} productivity cadastrados.
       ${qtdRatings} ratings cadastrados.
       ${qtdIsi} isi cadastrados.
@@ -42,10 +59,15 @@ const main = async (): Promise<void> => {
     name: 'Empresa X'
   }
   const newCompany = await prisma.company.create({ data })
-  console.log(`Company ${newCompany.name} criado.`)
+  progress()
 
-  console.log(`Foram identificados ${dataJson.length} usuários.`)
-  void dataJson.map(async ({ points, day_goal, night_goal, user_program_sessions, sleep_diaries, productivity, ratings, isi, gad, phq }) => {
+  qtdTags += tags.length
+  await prisma.tag.createMany({
+    data: tags
+  })
+  progress()
+
+  void dataJson.user.map(async ({ points, day_goal, night_goal, user_program_sessions, sleep_diaries, productivity, ratings, isi, gad, phq }) => {
     const data = {
       points,
       day_goal,
@@ -71,29 +93,29 @@ const main = async (): Promise<void> => {
     progress()
 
     qtdSleepDiaries += sleep_diaries.length
-    sleep_diaries.map(async (e: AddSleepDiariesDto): Promise<Sleep_Diaries> => {
-      let tags: Array<{ sleep_tag: string }> | [] = []
-      e.tags ? (tags = e.tags) : (e.tags = [])
+    sleep_diaries.map(async (e: JsonSleepDiariesDto) => {
+      const tags = e.tags
       delete e.tags
-
+      const elementsWithTags: SleepDiariesWithTagsDto = e
       const data = {
-        ...e,
+        ...elementsWithTags,
         user_id: newUser.id,
         company_id: newCompany.id
       }
-      const sleepDiarie = await prisma.sleep_Diaries.create({ data })
 
-      if (tags.length > 0) {
-        let i: CreateTagDto
-        for (i of tags) {
-          const data = {
-            sleep_tag: i.sleep_tag,
-            sleep_DiariesId: sleepDiarie.id
+      const sleep_DiariesId = (await prisma.sleep_Diaries.create({ data })).id
+      tags?.map(async (e: { sleep_tag: string }) => {
+        const sleep_tagId = (await prisma.tag.findUnique({
+          where: {
+            sleep_tag: e.sleep_tag
           }
-          await prisma.tag.create({ data })
+        }))?.id
+        if (sleep_tagId) {
+          await prisma.tagOnSleep_Diaries.create({ data: { sleep_tagId, sleep_DiariesId } })
+        } else {
+          console.log(`A tag ${e.sleep_tag} não está cadastrada.`)
         }
-      }
-      return sleepDiarie
+      })
     })
     progress()
 
