@@ -10,7 +10,6 @@ import { AddUserProgramDto } from '../src/userPrograms/dto/add-user-program.dto'
 import * as dataJson from '../src/utils/data/data.json'
 
 const prisma = new PrismaClient()
-// const dataJson = [...data.user]
 const tags = [
   { sleep_tag: 'caffeine' },
   { sleep_tag: 'noise' },
