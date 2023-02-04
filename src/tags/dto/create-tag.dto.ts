@@ -1,7 +1,7 @@
 import { IsOptional, IsString } from 'class-validator'
 
 export class CreateTagDto {
-  @IsString
+  @IsString()
     sleep_tag: string
 
   @IsOptional()
