@@ -23,7 +23,7 @@ let qtdPhq = 0
 const progress = (): void => {
   console.clear()
   console.log(`
-      Sedding in progress...
+      Seeding in progress...
 
       1 company cadastrado.
       ${qtdUsers} usuários cadastrados.
