@@ -1,12 +1,6 @@
 import { IsNumber, Min, Max, IsString } from 'class-validator'
 
-export class AddProductivityDto {
-  @IsString()
-    user_id?: string
-
-  @IsString()
-    company_id?: string
-
+export class AddProductivityWithoutRelation {
   @IsNumber()
   @Min(0)
   @Max(10)
@@ -29,4 +23,12 @@ export class AddProductivityDto {
 
   @IsString()
     created_at: string
+}
+
+export class AddProductivityDto extends AddProductivityWithoutRelation {
+  @IsString()
+    user_id?: string
+
+  @IsString()
+    company_id?: string
 }

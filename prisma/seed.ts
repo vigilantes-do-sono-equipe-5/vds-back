@@ -1,11 +1,11 @@
 import { PrismaClient } from '@prisma/client'
-import { SleepDiariesWithTagsDto } from 'src/sleep-diaries/dto/sleepDiariesWithTags.dto'
+import { SleepDiariesWithoutTagsDto } from 'src/sleep-diaries/dto/sleepDiariesWithoutTags.dto'
 import { AddGadDto } from '../src/gads/dto/add-gad.dto'
 import { AddIsiDto } from '../src/isis/dto/add-isi.dto'
 import { AddPhqDto } from '../src/phqs/dto/add-phq.dto'
 import { AddProductivityDto } from '../src/productivitys/dto/add-productivity.dto'
 import { AddRatingsDto } from '../src/ratings/dto/add-ratings.dto'
-import { JsonSleepDiariesDto } from '../src/sleep-diaries/dto/json-sleep-diaries.dto'
+import { SleepDiariesWithTagsDto } from '../src/sleep-diaries/dto/sleepDiariesWithTags.dto'
 import { AddUserProgramDto } from '../src/userPrograms/dto/add-user-program.dto'
 import * as dataJson from '../src/utils/data/data.json'
 
@@ -92,10 +92,10 @@ const main = async (): Promise<void> => {
     progress()
 
     qtdSleepDiaries += sleep_diaries.length
-    sleep_diaries.map(async (e: JsonSleepDiariesDto) => {
+    sleep_diaries.map(async (e: SleepDiariesWithTagsDto) => {
       const tags = e.tags
       delete e.tags
-      const elementsWithTags: SleepDiariesWithTagsDto = e
+      const elementsWithTags: SleepDiariesWithoutTagsDto = e
       const data = {
         ...elementsWithTags,
         user_id: newUser.id,
@@ -104,11 +104,13 @@ const main = async (): Promise<void> => {
 
       const sleep_DiariesId = (await prisma.sleep_Diaries.create({ data })).id
       tags?.map(async (e: { sleep_tag: string }) => {
-        const sleep_tagId = (await prisma.tag.findUnique({
-          where: {
-            sleep_tag: e.sleep_tag
-          }
-        }))?.id
+        const sleep_tagId = (
+          await prisma.tag.findUnique({
+            where: {
+              sleep_tag: e.sleep_tag
+            }
+          })
+        )?.id
         if (sleep_tagId) {
           await prisma.tagOnSleep_Diaries.create({ data: { sleep_tagId, sleep_DiariesId } })
         } else {

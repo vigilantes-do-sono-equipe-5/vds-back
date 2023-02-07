@@ -1,14 +1,6 @@
 import { IsOptional, IsNumber, Min, Max, IsString } from 'class-validator'
 
-export class AddRatingsDto {
-  @IsOptional()
-  @IsString()
-    user_id?: string
-
-  @IsOptional()
-  @IsString()
-    company_id?: string
-
+export class AddRatingWithoutRelation {
   @IsNumber()
   @Min(0)
   @Max(5)
@@ -21,4 +13,14 @@ export class AddRatingsDto {
 
   @IsString()
     created: string
+}
+
+export class AddRatingsDto extends AddRatingWithoutRelation {
+  @IsOptional()
+  @IsString()
+    user_id?: string
+
+  @IsOptional()
+  @IsString()
+    company_id?: string
 }

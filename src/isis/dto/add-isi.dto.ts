@@ -1,14 +1,6 @@
 import { IsNumber, Min, Max, IsString, IsOptional } from 'class-validator'
 
-export class AddIsiDto {
-  @IsOptional()
-  @IsString()
-    user_id?: string
-
-  @IsOptional()
-  @IsString()
-    company_id?: string
-
+export class AddIsiDtoWithoutRealtion {
   @IsNumber()
   @Min(0)
   @Max(4)
@@ -46,4 +38,14 @@ export class AddIsiDto {
 
   @IsString()
     created_at: string
+}
+
+export class AddIsiDto extends AddIsiDtoWithoutRealtion {
+  @IsOptional()
+  @IsString()
+    user_id?: string
+
+  @IsOptional()
+  @IsString()
+    company_id?: string
 }

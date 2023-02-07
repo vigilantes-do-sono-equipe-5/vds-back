@@ -1,14 +1,6 @@
 import { IsOptional, IsNumber, Min, Max, IsString } from 'class-validator'
 
-export class AddPhqDto {
-  @IsOptional()
-  @IsString()
-    user_id?: string
-
-  @IsOptional()
-  @IsString()
-    company_id?: string
-
+export class AddPhqWithoutRelation {
   @IsNumber()
   @Min(0)
   @Max(3)
@@ -21,4 +13,13 @@ export class AddPhqDto {
 
   @IsString()
     created_at: string
+}
+export class AddPhqDto extends AddPhqWithoutRelation {
+  @IsOptional()
+  @IsString()
+    user_id?: string
+
+  @IsOptional()
+  @IsString()
+    company_id?: string
 }
