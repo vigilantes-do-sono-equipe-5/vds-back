@@ -6,8 +6,8 @@ export class CommonMethodsService {
   convertDateUTC (startDate: string, finalDate: string): IConvertDateUTC {
     const startDateSplit = startDate.split('-')
     const finalDateSplit = finalDate.split('-')
-    const start = Date.UTC(+startDateSplit[0], +startDateSplit[1], +startDateSplit[2])
-    const final = Date.UTC(+finalDateSplit[0], +finalDateSplit[1], +finalDateSplit[2])
+    const start = Date.UTC(+startDateSplit[0], (+startDateSplit[1] - 1), +startDateSplit[2])
+    const final = Date.UTC(+finalDateSplit[0], (+finalDateSplit[1] - 1), +finalDateSplit[2])
 
     return {
       start,
