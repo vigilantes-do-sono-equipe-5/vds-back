@@ -15,4 +15,8 @@ export class CompanyService {
   async update (id: string, dto: UpdateCompanyDto): Promise<Company> {
     return await this.prisma.company.update({ where: { id }, data: { ...dto } })
   }
+
+  async findAll (): Promise<Company[]> {
+    return await this.prisma.company.findMany()
+  }
 }
