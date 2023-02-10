@@ -55,7 +55,8 @@ const progress = (): void => {
 
 const main = async (): Promise<void> => {
   const data = {
-    name: 'Empresa X'
+    name: 'Empresa X',
+    employees: 60
   }
   const newCompany = await prisma.company.create({ data })
   progress()
