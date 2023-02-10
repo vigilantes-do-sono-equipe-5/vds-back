@@ -6,9 +6,9 @@ generator client {
 }
 
 generator erd {
-  provider = "prisma-erd-generator"
-  output = "../prisma/ERD.svg"
-  theme = "forest"
+  provider                  = "prisma-erd-generator"
+  output                    = "../prisma/ERD.svg"
+  theme                     = "forest"
   includeRelationFromFields = true
 }
 
@@ -21,6 +21,7 @@ datasource db {
 model Company {
   id                   String                 @id @default(uuid())
   name                 String
+  employees            Int
   users                User[]
   Gad                  Gad[]
   User_Program_Session User_Program_Session[]
