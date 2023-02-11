@@ -26,6 +26,7 @@ const tags = [
   { sleep_tag: 'bathroom' },
   { sleep_tag: 'dream' }
 ]
+const regexLabelRating = /^session\d+_rate$/
 let qtdUsers = 0
 let qtdUserProgramSessions = 0
 let qtdSleepDiaries = 0
@@ -132,7 +133,6 @@ const main = async (): Promise<void> => {
     await prisma.productivity.createMany({ data: dataProductivity })
     progress()
 
-    qtdRatings += ratings.length
     const dataRatings = ratings.map((e: AddRatingsDto) => {
       return {
         ...e,
@@ -140,7 +140,9 @@ const main = async (): Promise<void> => {
         company_id: newCompany.id
       }
     })
-    await prisma.rating.createMany({ data: dataRatings })
+    const dataratingsChecked = dataRatings.filter((e: AddRatingsDto): boolean => regexLabelRating.test(e.label))
+    await prisma.rating.createMany({ data: dataratingsChecked })
+    qtdRatings += dataratingsChecked.length
     progress()
 
     qtdIsi += isi.length
