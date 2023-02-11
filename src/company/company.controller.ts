@@ -19,7 +19,12 @@ export class CompanyController {
   }
 
   @Get()
-  async findAll (): Promise<Company[]> {
+  async findAll (): Promise<Array<{
+    id: string
+    name: string
+    employees: number
+    activeEmployees: number
+  }>> {
     return await this.companyService.findAll()
   }
 }
