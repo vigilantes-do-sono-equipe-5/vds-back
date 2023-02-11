@@ -1,13 +1,11 @@
 import { IsOptional, IsNumber, Min, Max, IsString } from 'class-validator'
 
 export class AddRatingWithoutRelation {
-  @IsNumber()
-  @Min(0)
-  @Max(5)
+  @IsString()
     label: string
 
   @IsNumber()
-  @Min(0)
+  @Min(1)
   @Max(5)
     grade: number
 
