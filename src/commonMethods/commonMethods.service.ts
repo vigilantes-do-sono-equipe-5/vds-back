@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
-import { ICheckWeekOrMonth, IConvertDateUTC, IPeriodBeginningMiddleEnd } from './commonMethods.interfaces'
+import { ICheckWeekOrMonth, ConvertDateUTC, IPeriodBeginningMiddleEnd, AddConvertDateUTC } from './commonMethods.interfaces'
 
 @Injectable()
 export class CommonMethodsService {
-  convertDateUTC (startDate: string, finalDate: string): IConvertDateUTC {
+  convertDateUTC ({ startDate, finalDate }: AddConvertDateUTC): ConvertDateUTC {
     const startDateSplit = startDate.split('-')
     const finalDateSplit = finalDate.split('-')
-    const start = Date.UTC(+startDateSplit[0], (+startDateSplit[1] - 1), +startDateSplit[2])
-    const final = Date.UTC(+finalDateSplit[0], (+finalDateSplit[1] - 1), +finalDateSplit[2])
+    const start = Date.UTC(+startDateSplit[0], +startDateSplit[1] - 1, +startDateSplit[2])
+    const final = Date.UTC(+finalDateSplit[0], +finalDateSplit[1] - 1, +finalDateSplit[2])
 
     return {
       start,
@@ -15,8 +15,8 @@ export class CommonMethodsService {
     }
   }
 
-  private checkWeekOrMonth (startDate: string, finalDate: string): ICheckWeekOrMonth {
-    const convertDateUTC = this.convertDateUTC(startDate, finalDate)
+  private checkWeekOrMonth ({ startDate, finalDate }: AddConvertDateUTC): ICheckWeekOrMonth {
+    const convertDateUTC = this.convertDateUTC({ startDate, finalDate })
     const startDateUTC = convertDateUTC.start
     const finalDateUTC = convertDateUTC.final
     const oneDayUTC = 86400000
@@ -52,8 +52,8 @@ export class CommonMethodsService {
     }
   }
 
-  divideThreePeriods (startDate: string, finalDate: string): IPeriodBeginningMiddleEnd | undefined {
-    const data = this.checkWeekOrMonth(startDate, finalDate)
+  divideThreePeriods ({ startDate, finalDate }: AddConvertDateUTC): IPeriodBeginningMiddleEnd | undefined {
+    const data = this.checkWeekOrMonth({ startDate, finalDate })
 
     switch (data.weekOrMonth) {
       case 'week':

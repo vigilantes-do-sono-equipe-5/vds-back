@@ -1,4 +1,13 @@
-export interface IConvertDateUTC {
+import { IsString } from 'class-validator'
+
+export class AddConvertDateUTC {
+  @IsString()
+    startDate: string
+
+  @IsString()
+    finalDate: string
+}
+export class ConvertDateUTC {
   start: number
   final: number
 }
