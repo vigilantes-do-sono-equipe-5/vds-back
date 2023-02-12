@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
 import { Company } from '@prisma/client'
+import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { CompanyService } from './company.service'
 import { CreateCompanyDto } from './dto/createCompany.dto'
 import { UpdateCompanyDto } from './dto/updateCompany.dto'
@@ -19,12 +20,36 @@ export class CompanyController {
   }
 
   @Get()
-  async findAll (): Promise<Array<{
+  async findAll (): Promise<
+  Array<{
     id: string
     name: string
     employees: number
     activeEmployees: number
-  }>> {
+  }>
+  > {
     return await this.companyService.findAll()
+  }
+
+  @Get('main-numbers/:id')
+  async mainNumbers (
+    @Param('id') id: string,
+      @Body() date: AddConvertDateUTC
+  ): Promise<{
+        userProgramSession: number
+        sleepDiaries: number
+        techniques: number
+      }> {
+    return await this.companyService.mainNumbers(id, date)
+  }
+
+  @Get('chosenGoals/:id')
+  async chosenGoals (@Param('id') id: string): Promise<{
+    concentration: number
+    energy: number
+    relationships: number
+    humor: number
+  }> {
+    return await this.companyService.chosenGoals(id)
   }
 }

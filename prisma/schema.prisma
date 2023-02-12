@@ -30,6 +30,7 @@ model Company {
   Phq                  Phq[]
   Productivity         Productivity[]
   Sleep_Diarie         Sleep_Diaries[]
+  tag                  TagOnSleep_Diaries[]
 }
 
 model User {
@@ -170,4 +171,6 @@ model TagOnSleep_Diaries {
   sleep_tagId     String
   sleep_diaries   Sleep_Diaries @relation(fields: [sleep_DiariesId], references: [id], onDelete: Cascade)
   sleep_DiariesId String
+  Company         Company?      @relation(fields: [companyId], references: [id])
+  companyId       String?
 }
