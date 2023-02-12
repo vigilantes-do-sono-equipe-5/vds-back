@@ -4,7 +4,9 @@ import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { AddRatingsDto } from './dto/add-ratings.dto'
 import { UpdateRatingsDto } from './dto/updateRating.dto'
 import { RatingsService } from './ratings.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('ratings')
 @Controller('rating')
 export class RatingsController {
   constructor (private readonly ratingsService: RatingsService) {}

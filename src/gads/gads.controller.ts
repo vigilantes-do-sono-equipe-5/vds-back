@@ -4,7 +4,9 @@ import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { AddGadDto } from './dto/add-gad.dto'
 import { UpdateGadDto } from './dto/updateGad.dto'
 import { GadsService } from './gads.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('gad')
 @Controller('gad')
 export class GadsController {
   constructor (private readonly gadsService: GadsService) {}

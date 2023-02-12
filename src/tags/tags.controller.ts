@@ -3,7 +3,9 @@ import { Tag } from '@prisma/client'
 import { CreateTagDto } from './dto/create-tag.dto'
 import { UpdateTagDto } from './dto/updateTag.dto'
 import { TagsService } from './tags.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('tags')
 @Controller()
 export class TagsController {
   constructor (private readonly tagsService: TagsService) {}

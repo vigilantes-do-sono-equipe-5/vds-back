@@ -4,7 +4,9 @@ import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { AddPhqDto } from './dto/add-phq.dto'
 import { UpdatePhqDto } from './dto/updatePhq.dto'
 import { PhqsService } from './phqs.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('phq')
 @Controller('phq')
 export class PhqsController {
   constructor (private readonly phqsService: PhqsService) {}

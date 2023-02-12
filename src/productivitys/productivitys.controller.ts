@@ -3,7 +3,9 @@ import { Productivity } from '@prisma/client'
 import { AddProductivityDto } from './dto/add-productivity.dto'
 import { UpdateProductivityDto } from './dto/updateProductivity.dto'
 import { ProductivitysService } from './productivitys.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('productivities')
 @Controller()
 export class ProductivitysController {
   constructor (private readonly productivitysService: ProductivitysService) {}

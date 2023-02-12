@@ -3,7 +3,9 @@ import { SleepDiariesService } from './sleepDiaries.service'
 import { Sleep_Diaries } from '@prisma/client'
 import { AddSleepDiariesWithTagsDto } from './dto/add-sleepDiaries.dto'
 import { UpdateSleepDiariesDto } from './dto/updateSleepDiaries.dto'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('sleep-diaries')
 @Controller('sleepDiaries')
 export class SleepDiariesController {
   constructor (private readonly sleepDiariesService: SleepDiariesService) {}

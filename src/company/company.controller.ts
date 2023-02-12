@@ -4,7 +4,9 @@ import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { CompanyService } from './company.service'
 import { CreateCompanyDto } from './dto/createCompany.dto'
 import { UpdateCompanyDto } from './dto/updateCompany.dto'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('companies')
 @Controller('company')
 export class CompanyController {
   constructor (private readonly companyService: CompanyService) {}

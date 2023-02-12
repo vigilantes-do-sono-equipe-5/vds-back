@@ -4,7 +4,9 @@ import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { AddIsiDto } from './dto/add-isi.dto'
 import { UpdateIsiDto } from './dto/updateIsi.dto'
 import { IsisService } from './isis.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('isi')
 @Controller('isi')
 export class IsisController {
   constructor (private readonly isisService: IsisService) {}
