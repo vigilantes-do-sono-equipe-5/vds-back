@@ -147,6 +147,7 @@ CREATE TABLE "TagOnSleep_Diaries" (
     "id" TEXT NOT NULL,
     "sleep_tagId" TEXT NOT NULL,
     "sleep_DiariesId" TEXT NOT NULL,
+    "companyId" TEXT,
 
     CONSTRAINT "TagOnSleep_Diaries_pkey" PRIMARY KEY ("id")
 );
@@ -204,3 +205,6 @@ ALTER TABLE "TagOnSleep_Diaries" ADD CONSTRAINT "TagOnSleep_Diaries_sleep_tagId_
 
 -- AddForeignKey
 ALTER TABLE "TagOnSleep_Diaries" ADD CONSTRAINT "TagOnSleep_Diaries_sleep_DiariesId_fkey" FOREIGN KEY ("sleep_DiariesId") REFERENCES "Sleep_Diaries"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TagOnSleep_Diaries" ADD CONSTRAINT "TagOnSleep_Diaries_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE SET NULL ON UPDATE CASCADE;

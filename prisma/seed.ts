@@ -114,7 +114,7 @@ const main = async (): Promise<void> => {
           })
         )?.id
         if (sleep_tagId) {
-          await prisma.tagOnSleep_Diaries.create({ data: { sleep_tagId, sleep_DiariesId } })
+          await prisma.tagOnSleep_Diaries.create({ data: { sleep_tagId, sleep_DiariesId, companyId: newCompany.id } })
         } else {
           console.log(`A tag ${e.sleep_tag} não está cadastrada.`)
         }
