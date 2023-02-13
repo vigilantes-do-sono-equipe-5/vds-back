@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
 import { Company } from '@prisma/client'
-import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { CompanyService } from './company.service'
 import { CreateCompanyDto } from './dto/createCompany.dto'
 import { UpdateCompanyDto } from './dto/updateCompany.dto'
@@ -40,19 +39,16 @@ export class CompanyController {
     return await this.companyService.findAll()
   }
 
-  @Get('main-numbers/:id')
   @ApiOperation({
     summary: 'Obtenha os principais números de uma empresa, sendo eles respectivamente, o número total de sessões, total de noites de sono relatadas e por fim o valor total das técnicas aplicadas.'
   })
-  async mainNumbers (
-    @Param('id') id: string,
-      @Body() date: AddConvertDateUTC
-  ): Promise<{
-        userProgramSession: number
-        sleepDiaries: number
-        techniques: number
-      }> {
-    return await this.companyService.mainNumbers(id, date)
+  @Get('main-numbers/:id')
+  async mainNumbers (@Param('id') id: string): Promise<{
+    userProgramSession: number
+    sleepDiaries: number
+    techniques: number
+  }> {
+    return await this.companyService.mainNumbers(id)
   }
 
   @Get('chosenGoals/:id')
