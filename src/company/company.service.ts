@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Company, Sleep_Diaries, User_Program_Session, User } from '@prisma/client'
-import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
+import { Company, Sleep_Diaries, User } from '@prisma/client'
 import { CommonMethodsService } from 'src/commonMethods/commonMethods.service'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { CreateCompanyDto } from './dto/createCompany.dto'
@@ -44,25 +43,17 @@ export class CompanyService {
   }
 
   async mainNumbers (
-    id: string,
-    date: AddConvertDateUTC
+    id: string
   ): Promise<{
       userProgramSession: number
       sleepDiaries: number
       techniques: number
     }> {
-    const dateUTC = this.commonMethodsService.convertDateUTC(date)
     const companyAllList = await this.prisma.company.findMany({ where: { id }, include: { User_Program_Session: true, Sleep_Diarie: true } })
 
-    const userProgramSessionFilter = companyAllList[0].User_Program_Session.filter((e: User_Program_Session): boolean => {
-      const date = new Date(e.created_at.slice(0, 10))
-      return dateUTC ? +date >= dateUTC.start && +date < dateUTC.final : false
-    })
+    const userProgramSessionList = companyAllList[0].User_Program_Session
 
-    const sleepDiarieListFilter = companyAllList[0].Sleep_Diarie.filter((e: Sleep_Diaries): boolean => {
-      const date = new Date(e.created_at.slice(0, 10))
-      return dateUTC ? +date >= dateUTC.start && +date < dateUTC.final : false
-    })
+    const sleepDiariesListList = companyAllList[0].Sleep_Diarie
 
     const techniques = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     companyAllList[0].Sleep_Diarie.forEach((e: Sleep_Diaries) => {
@@ -82,8 +73,8 @@ export class CompanyService {
     })
 
     return {
-      userProgramSession: userProgramSessionFilter.length,
-      sleepDiaries: sleepDiarieListFilter.length,
+      userProgramSession: userProgramSessionList.length,
+      sleepDiaries: sleepDiariesListList.length,
       techniques: techniques.reduce((a, b) => a + b, 0)
     }
   }
