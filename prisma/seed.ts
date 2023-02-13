@@ -26,6 +26,7 @@ const tags = [
   { sleep_tag: 'bathroom' },
   { sleep_tag: 'dream' }
 ]
+const regexLabelRating = /^session\d+_rate$/
 let qtdUsers = 0
 let qtdUserProgramSessions = 0
 let qtdSleepDiaries = 0
@@ -55,7 +56,8 @@ const progress = (): void => {
 
 const main = async (): Promise<void> => {
   const data = {
-    name: 'Empresa X'
+    name: 'Empresa X',
+    employees: 60
   }
   const newCompany = await prisma.company.create({ data })
   progress()
@@ -112,7 +114,7 @@ const main = async (): Promise<void> => {
           })
         )?.id
         if (sleep_tagId) {
-          await prisma.tagOnSleep_Diaries.create({ data: { sleep_tagId, sleep_DiariesId } })
+          await prisma.tagOnSleep_Diaries.create({ data: { sleep_tagId, sleep_DiariesId, companyId: newCompany.id } })
         } else {
           console.log(`A tag ${e.sleep_tag} não está cadastrada.`)
         }
@@ -131,7 +133,6 @@ const main = async (): Promise<void> => {
     await prisma.productivity.createMany({ data: dataProductivity })
     progress()
 
-    qtdRatings += ratings.length
     const dataRatings = ratings.map((e: AddRatingsDto) => {
       return {
         ...e,
@@ -139,7 +140,9 @@ const main = async (): Promise<void> => {
         company_id: newCompany.id
       }
     })
-    await prisma.rating.createMany({ data: dataRatings })
+    const dataratingsChecked = dataRatings.filter((e: AddRatingsDto): boolean => regexLabelRating.test(e.label))
+    await prisma.rating.createMany({ data: dataratingsChecked })
+    qtdRatings += dataratingsChecked.length
     progress()
 
     qtdIsi += isi.length

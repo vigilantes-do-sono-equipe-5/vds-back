@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { MethodsModule } from './commonMethods/commonMethods.module'
 import { CompanyModule } from './company/company.module'
 import { GadsModule } from './gads/gads.module'
 import { IsisModule } from './isis/isis.module'
@@ -25,7 +26,8 @@ import { UsersModule } from './users/users.module'
     SleepDiariesModule,
     TagsModule,
     UserProgramsModule,
-    UsersModule
+    UsersModule,
+    MethodsModule
   ],
   controllers: [AppController],
   providers: [AppService]

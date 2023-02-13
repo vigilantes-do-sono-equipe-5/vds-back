@@ -12,9 +12,9 @@ export class TagsService {
     return await this.prisma.tag.create({ data: { ...dto } })
   }
 
-  async update (dto: UpdateTagDto): Promise<Tag> {
+  async update (id: string, dto: UpdateTagDto): Promise<Tag> {
     return await this.prisma.tag.update({
-      where: { ...dto },
+      where: { id },
       data: { ...dto }
     })
   }
