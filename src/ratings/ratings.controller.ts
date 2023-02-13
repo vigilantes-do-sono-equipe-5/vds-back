@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Patch, Param } from '@nestjs/common'
+import { Body, Controller, Get, Post, Patch, Param, Query } from '@nestjs/common'
 import { Rating } from '@prisma/client'
 import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { AddRatingsDto } from './dto/add-ratings.dto'
@@ -32,7 +32,7 @@ export class RatingsController {
   })
   async findByCompanyId (
     @Param('id') id: string,
-      @Body() date: AddConvertDateUTC
+      @Query() date: AddConvertDateUTC
   ): Promise<{
         1: number
         2: number

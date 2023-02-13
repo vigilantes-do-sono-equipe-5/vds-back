@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common'
 import { Gad } from '@prisma/client'
 import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { AddGadDto } from './dto/add-gad.dto'
@@ -32,7 +32,7 @@ export class GadsController {
   })
   async findByCompanyId (
     @Param('id') id: string,
-      @Body() dto: AddConvertDateUTC
+      @Query() dto: AddConvertDateUTC
   ): Promise<{
         beginningAverageGad: number
         middleAverageGad: number

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Patch, Param } from '@nestjs/common'
+import { Body, Controller, Get, Post, Patch, Param, Query } from '@nestjs/common'
 import { Isi } from '@prisma/client'
 import { AddConvertDateUTC } from 'src/commonMethods/commonMethods.interfaces'
 import { AddIsiDto } from './dto/add-isi.dto'
@@ -32,7 +32,7 @@ export class IsisController {
   })
   async findByCompanyId (
     @Param('id') id: string,
-      @Body() dto: AddConvertDateUTC
+      @Query() dto: AddConvertDateUTC
   ): Promise<{
         beginningAverageIsi: number
         middleAverageIsi: number
