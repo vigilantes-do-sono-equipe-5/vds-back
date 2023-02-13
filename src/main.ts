@@ -1,9 +1,17 @@
+import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { Server } from 'http'
 import { AppModule } from './app.module'
 
+export const port = process.env.PORT ?? 3000
+
 async function bootstrap (): Promise<void> {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create<INestApplication>(AppModule, {
+    cors: true
+  })
+
+  app.useGlobalPipes(new ValidationPipe())
 
   const config = new DocumentBuilder()
     .setTitle('Vigilantes do Sono API')
@@ -23,8 +31,16 @@ async function bootstrap (): Promise<void> {
     .build()
 
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document)
 
-  await app.listen(3000)
+  SwaggerModule.setup('docs', app, document)
+
+  const server: Server = await app.listen(port, () => {
+    console.log(`Application running on ${!process.env.PORT ? `http://localhost:${port}` : `port ${port}`}`)
+  })
+
+  process.on('SIGINT', () => {
+    server.close()
+    console.log('Finished Application')
+  })
 }
 void bootstrap()
