@@ -1,4 +1,9 @@
+import { ApiProperty } from '@nestjs/swagger'
+
 export class CreateCompanyDto {
-  name: string
-  employees: number
+  @ApiProperty()
+    name: string
+
+  @ApiProperty()
+    employees: number
 }
