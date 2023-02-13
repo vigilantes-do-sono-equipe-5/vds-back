@@ -5,13 +5,16 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node":">=18.10.0"
+  },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
     "prepare": "husky install",
     "prebuild": "rimraf dist",
-    "build": "node --max-old-space-size=15360 `which nest` build",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
