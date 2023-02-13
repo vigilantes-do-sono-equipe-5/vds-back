@@ -1,26 +1,30 @@
+import { ApiProperty } from '@nestjs/swagger'
 import { IsOptional, IsNumber, Min, Max, IsString } from 'class-validator'
 
 export class AddRatingWithoutRelation {
-  @IsNumber()
-  @Min(0)
-  @Max(5)
+  @IsString()
+  @ApiProperty()
     label: string
 
   @IsNumber()
-  @Min(0)
+  @ApiProperty()
+  @Min(1)
   @Max(5)
     grade: number
 
   @IsString()
+  @ApiProperty()
     created: string
 }
 
 export class AddRatingsDto extends AddRatingWithoutRelation {
+  @ApiProperty()
   @IsOptional()
   @IsString()
     user_id?: string
 
   @IsOptional()
+  @ApiProperty()
   @IsString()
     company_id?: string
 }
