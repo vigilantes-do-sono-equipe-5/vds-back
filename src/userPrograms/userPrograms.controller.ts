@@ -8,14 +8,14 @@ import { ApiTags } from '@nestjs/swagger'
 ApiTags('user-program-sessions')
 @Controller()
 export class UserProgramsController {
-  constructor (private readonly nameService: UserProgramsService) {}
+  constructor (private readonly userProgramService: UserProgramsService) {}
   @Post()
   async create (@Body() dto: AddUserProgramDto): Promise<User_Program_Session> {
-    return await this.nameService.create(dto)
+    return await this.userProgramService.create(dto)
   }
 
   @Patch(':id')
   async update (@Param('id') id: string, @Body() dto: UpdateUserProgramDto): Promise<User_Program_Session> {
-    return await this.nameService.update(id, dto)
+    return await this.userProgramService.update(id, dto)
   }
 }
