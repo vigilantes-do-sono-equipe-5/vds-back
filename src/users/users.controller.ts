@@ -6,7 +6,7 @@ import { UsersService } from './users.service'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 
 @ApiTags('users')
-@Controller()
+@Controller('users')
 export class UsersController {
   constructor (private readonly nameService: UsersService) {}
   @Post()
