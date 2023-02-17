@@ -39,7 +39,5 @@ $ yarn run start:prod
 #### [Marcos de Araujo](https://www.linkedin.com/in/marcos-vinicius-pereira-barbosa-de-araujo-25656b202/),
 #### [Manoel Rocha](https://www.linkedin.com/in/manoel-rocha-6328091b8/),
 #### [Pedro Lopes](https://www.linkedin.com/in/pedro-phls/),
-#### [Darlan Santos](https://www.linkedin.com/in/darlan-souza-dev/),
-#### [Ednilson Fragoso](https://www.linkedin.com/in/ednilsonfragoso/),
 #### [João Guilherme Braga](https://www.linkedin.com/in/joao-guilherme-braga/),
 #### [Matheus Silva](https://www.linkedin.com/in/matheus-silva-480011230/)
